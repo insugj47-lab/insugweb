@@ -430,6 +430,17 @@ body.mobile-menu-open {
   transform: translateY(-3px);
 }
 
+.btn-paypal {
+  background: linear-gradient(135deg, #0070ba 0%, #003087 100%);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(0, 112, 186, 0.25);
+}
+
+.btn-paypal:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(0, 112, 186, 0.32);
+}
+
 .btn-icon-only {
   width: 44px;
   height: 44px;
@@ -482,6 +493,13 @@ body.mobile-menu-open {
 
 .spotlight-copy p {
   color: var(--text-secondary);
+}
+
+.spotlight-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .spotlight-stats {
