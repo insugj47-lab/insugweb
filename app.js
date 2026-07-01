@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Lucide 아이콘 초기화
-  lucide.createIcons();
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    lucide.createIcons();
+  }
 
   const pageLoader = document.getElementById('page-loader');
   if (pageLoader) {
+    const hideLoader = () => {
+      pageLoader.classList.add('hidden');
+    };
+
     window.addEventListener('load', () => {
-      setTimeout(() => {
-        pageLoader.classList.add('hidden');
-      }, 800);
+      setTimeout(hideLoader, 800);
     });
+
+    setTimeout(() => {
+      if (!pageLoader.classList.contains('hidden')) {
+        hideLoader();
+      }
+    }, 5000);
   }
 
   /* ==========================================
