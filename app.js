@@ -3,6 +3,36 @@ document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
 
   /* ==========================================
+     SCROLL PROGRESS & BACK TO TOP
+     ========================================== */
+  const scrollProgressBar = document.querySelector('.scroll-progress-bar');
+  const scrollTopBtn = document.getElementById('scroll-top-btn');
+
+  function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+    if (scrollProgressBar) {
+      scrollProgressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    }
+
+    if (scrollTopBtn) {
+      scrollTopBtn.classList.toggle('visible', scrollTop > 500);
+    }
+  }
+
+  updateScrollProgress();
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  window.addEventListener('load', updateScrollProgress);
+
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ==========================================
      THEME TOGGLE (DARK / LIGHT)
      ========================================== */
   const themeToggleBtn = document.getElementById('theme-toggle');

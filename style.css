@@ -68,6 +68,56 @@ body {
   line-height: 1.6;
 }
 
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-pink), var(--accent-cyan));
+  z-index: 250;
+  box-shadow: 0 0 16px rgba(248, 80, 120, 0.35);
+}
+
+.scroll-top-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  z-index: 250;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.scroll-top-btn:hover {
+  background: var(--gradient-hero);
+  color: #fff;
+  transform: translateY(-4px);
+}
+
+@media (max-width: 768px) {
+  .scroll-top-btn {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
 /* ==========================================
    DECORATIVE BACKGROUND ELEMENTS
    ========================================== */
