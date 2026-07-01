@@ -31,9 +31,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  const mainHeader = document.querySelector('.main-header');
+
+  function updateHeaderState() {
+    if (mainHeader) {
+      mainHeader.classList.toggle('scrolled', window.scrollY > 20);
+    }
+  }
+
   updateScrollProgress();
-  window.addEventListener('scroll', updateScrollProgress, { passive: true });
-  window.addEventListener('load', updateScrollProgress);
+  updateHeaderState();
+  window.addEventListener('scroll', () => {
+    updateScrollProgress();
+    updateHeaderState();
+  }, { passive: true });
+  window.addEventListener('load', () => {
+    updateScrollProgress();
+    updateHeaderState();
+  });
 
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener('click', () => {
