@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>insugj47 크리에이티브 허브 | 공식 웹사이트</title>
+  
+  <!-- SEO 메타 태그 -->
+  <meta name="description" content="크리에이터 insugj47의 공식 허브 웹사이트입니다. 정땅콩tv, 땅콩맘샵, 찐재미 유튜브 채널 정보와 수박 게임, 벚꽃 게임 등 인기 HTML5 게임을 한자리에서 즐겨보세요!">
+  <meta name="keywords" content="insugj47, 정땅콩tv, 땅콩맘샵, 찐재미, 수박게임, 벚꽃게임, 미니게임, 크리에이터">
+  <meta property="og:title" content="insugj47 크리에이티브 허브">
+  <meta property="og:description" content="유튜브 채널 정보와 재미있는 게임들을 한 곳에서 만나보세요!">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- 폰트 로드 (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- 아이콘 라이브러리 (Lucide CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- 커스텀 스타일시트 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- 파티클 배경 Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- 배경 장식용 블러 서클 -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- 전체 레이아웃 컨테이너 -->
+  <div class="app-container">
+    
+    <!-- 네비게이션 헤더 -->
+    <header class="main-header glass">
+      <div class="logo">
+        <span class="logo-accent">insug</span>j47
+      </div>
+      <nav class="nav-links">
+        <a href="#hero" class="nav-link active"><i data-lucide="home"></i> 홈</a>
+        <a href="#youtube" class="nav-link"><i data-lucide="youtube"></i> 유튜브</a>
+        <a href="#games" class="nav-link"><i data-lucide="gamepad-2"></i> 게임</a>
+        <a href="#guestbook" class="nav-link"><i data-lucide="message-square"></i> 방명록</a>
+      </nav>
+      <div class="header-controls">
+        <button id="theme-toggle" class="control-btn glass" title="테마 변경">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+        <button id="particle-toggle" class="control-btn glass" title="배경 파티클 변경">
+          <i data-lucide="sparkles"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+      
+      <!-- 히어로 섹션 -->
+      <section id="hero" class="hero-section">
+        <div class="hero-content">
+          <div class="badge glass"><i data-lucide="sparkle"></i> Official Hub Website</div>
+          <h1 class="hero-title">
+            Creative <span class="gradient-text">Universe</span> of insugj47
+          </h1>
+          <p class="hero-desc">
+            세상을 즐겁게 만드는 아이디어와 콘텐츠가 모인 공간입니다. <br>
+            다채로운 유튜브 채널을 구독하고, 흥미진진한 인게임 퍼즐을 직접 경험해 보세요.
+          </p>
+          <div class="hero-buttons">
+            <a href="#youtube" class="btn btn-primary"><i data-lucide="play-circle"></i> 채널 구경하기</a>
+            <a href="#games" class="btn btn-secondary glass"><i data-lucide="gamepad"></i> 바로 게임하기</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 유튜브 섹션 -->
+      <section id="youtube" class="section-container">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="youtube" class="title-icon"></i> YouTube Channels</h2>
+          <p class="section-subtitle">insugj47이 운영하는 다양하고 개성 넘치는 유튜브 채널들을 만나보세요.</p>
+        </div>
+        
+        <div class="grid-layout">
+          <!-- 카드 1: 정땅콩tv -->
+          <div class="card glass youtube-card" data-tilt>
+            <div class="card-glow" style="background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(254, 180, 123, 0.15) 0%, transparent 60%);"></div>
+            <div class="card-header">
+              <div class="card-icon yt-icon-1">
+                <i data-lucide="video"></i>
+              </div>
+              <div class="card-badges">
+                <span class="badge-mini orange">정땅콩</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>정땅콩tv</h3>
+              <p class="channel-handle">@정땅콩tv</p>
+              <p class="card-desc">
+                정땅콩의 유쾌하고 힐링되는 일상 소통 및 다양한 라이프 스타일 이야기를 담는 채널입니다. 편안하고 친근한 재미를 전해드립니다.
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="https://www.youtube.com/@%EC%A0%95%EB%95%85%EC%BD%A9tv" target="_blank" rel="noopener noreferrer" class="card-btn">
+                <span>채널 방문하기</span>
+                <i data-lucide="external-link"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- 카드 2: 땅콩맘샵_링크 -->
+          <div class="card glass youtube-card" data-tilt>
+            <div class="card-glow" style="background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(248, 80, 120, 0.15) 0%, transparent 60%);"></div>
+            <div class="card-header">
+              <div class="card-icon yt-icon-2">
+                <i data-lucide="shopping-bag"></i>
+              </div>
+              <div class="card-badges">
+                <span class="badge-mini pink">커머스</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>땅콩맘샵_링크</h3>
+              <p class="channel-handle">@땅콩맘샵_링크</p>
+              <p class="card-desc">
+                트렌디한 핫딜 상품, 실용적인 살림 꿀팁 및 추천 아이템의 링크와 유용한 쇼핑 정보를 제공하는 스마트한 커머스 전문 허브 채널입니다.
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="https://www.youtube.com/@%EB%95%85%EC%BD%A9%EB%A7%98%EC%83%B5_%EB%A7%81%ED%81%AC" target="_blank" rel="noopener noreferrer" class="card-btn">
+                <span>채널 방문하기</span>
+                <i data-lucide="external-link"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- 카드 3: 찐재미-q2d -->
+          <div class="card glass youtube-card" data-tilt>
+            <div class="card-glow" style="background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 254, 0.15) 0%, transparent 60%);"></div>
+            <div class="card-header">
+              <div class="card-icon yt-icon-3">
+                <i data-lucide="gamepad-2"></i>
+              </div>
+              <div class="card-badges">
+                <span class="badge-mini cyan">게임&유머</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>찐재미-q2d</h3>
+              <p class="channel-handle">@찐재미-q2d</p>
+              <p class="card-desc">
+                시간 가는 줄 모르는 꿀잼 미니게임 플레이와 기상천외한 예능감 넘치는 클립으로 찐웃음을 선사하는 종합 게임 예능 채널입니다.
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="https://www.youtube.com/@%EC%B0%90%EC%9E%AC%EB%AF%B8-q2d" target="_blank" rel="noopener noreferrer" class="card-btn">
+                <span>채널 방문하기</span>
+                <i data-lucide="external-link"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 게임 섹션 -->
+      <section id="games" class="section-container">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="gamepad-2" class="title-icon"></i> HTML5 Games</h2>
+          <p class="section-subtitle">별도의 설치 없이 브라우저에서 바로 즐길 수 있는 중독성 만점 미니게임입니다.</p>
+        </div>
+
+        <div class="grid-layout games-grid">
+          <!-- 게임 1: 수박 게임 -->
+          <div class="card glass game-card" data-tilt>
+            <div class="game-thumbnail watermelon-bg">
+              <div class="game-badge"><i data-lucide="flame"></i> 인기 최고</div>
+              <div class="game-overlay">
+                <button class="btn btn-play-now" data-game-url="https://insugj47-lab-watermelon-making-game.insugj47.workers.dev/">
+                  <i data-lucide="play"></i> Quick Play
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>수박 만들기 게임</h3>
+              <p class="game-desc">
+                다양한 크기의 과일들을 떨어뜨려 같은 과일끼리 합쳐 더 큰 과일을 만드세요! 과연 화면을 넘치지 않고 거대한 '왕수박'을 완성할 수 있을까요?
+              </p>
+              <div class="game-tags">
+                <span>#퍼즐</span>
+                <span>#중독성</span>
+                <span>#물리효과</span>
+              </div>
+            </div>
+            <div class="card-footer game-footer">
+              <button class="btn btn-outline-play btn-play-now" data-game-url="https://insugj47-lab-watermelon-making-game.insugj47.workers.dev/">
+                <i data-lucide="sparkles"></i> 여기서 플레이
+              </button>
+              <a href="https://insugj47-lab-watermelon-making-game.insugj47.workers.dev/" target="_blank" rel="noopener noreferrer" class="btn btn-icon-only glass" title="새 창에서 열기">
+                <i data-lucide="external-link"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- 게임 2: 벚꽃 게임 -->
+          <div class="card glass game-card" data-tilt>
+            <div class="game-thumbnail cherry-bg">
+              <div class="game-badge"><i data-lucide="heart"></i> 힐링 감성</div>
+              <div class="game-overlay">
+                <button class="btn btn-play-now" data-game-url="https://cherry-blossom-game.insugj47.workers.dev/">
+                  <i data-lucide="play"></i> Quick Play
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>벚꽃 게임</h3>
+              <p class="game-desc">
+                화면을 가득 채우는 아름다운 벚꽃잎 흩날림 효과와 감성적인 사운드. 지친 일상 속에서 편안하게 화면을 터치하며 힐링의 순간을 느껴보세요.
+              </p>
+              <div class="game-tags">
+                <span>#힐링</span>
+                <span>#감성</span>
+                <span>#인터랙티브</span>
+              </div>
+            </div>
+            <div class="card-footer game-footer">
+              <button class="btn btn-outline-play btn-play-now" data-game-url="https://cherry-blossom-game.insugj47.workers.dev/">
+                <i data-lucide="sparkles"></i> 여기서 플레이
+              </button>
+              <a href="https://cherry-blossom-game.insugj47.workers.dev/" target="_blank" rel="noopener noreferrer" class="btn btn-icon-only glass" title="새 창에서 열기">
+                <i data-lucide="external-link"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 방명록 섹션 -->
+      <section id="guestbook" class="section-container">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="message-square" class="title-icon"></i> Guestbook</h2>
+          <p class="section-subtitle">insugj47 채널과 게임들을 응원하는 따뜻한 한마디를 남겨주세요!</p>
+        </div>
+
+        <div class="guestbook-container">
+          <!-- 방명록 작성 폼 -->
+          <form id="guestbook-form" class="guestbook-form glass">
+            <div class="form-row">
+              <div class="input-group">
+                <label for="nickname"><i data-lucide="user"></i> 닉네임</label>
+                <input type="text" id="nickname" required placeholder="이름을 입력하세요" maxlength="15">
+              </div>
+              <div class="input-group">
+                <label for="emoji-select"><i data-lucide="smile"></i> 이모지</label>
+                <select id="emoji-select">
+                  <option value="🥜">🥜 땅콩</option>
+                  <option value="🍉">🍉 수박</option>
+                  <option value="🌸" selected>🌸 벚꽃</option>
+                  <option value="🎮">🎮 게임</option>
+                  <option value="🔥">🔥 화이팅</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="message"><i data-lucide="pen-tool"></i> 메시지</label>
+              <textarea id="message" required placeholder="응원의 한마디를 남겨주세요! (최대 100자)" maxlength="100"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">
+              <span>남기기</span> <i data-lucide="send"></i>
+            </button>
+          </form>
+
+          <!-- 방명록 리스트 -->
+          <div class="guestbook-list-container">
+            <div class="list-header">
+              <h3>최근 응원 메시지 (<span id="message-count">0</span>)</h3>
+              <button id="clear-guestbook" class="btn-clear text-muted" title="방명록 초기화">비우기</button>
+            </div>
+            <div id="guestbook-messages" class="guestbook-messages">
+              <!-- JS에서 동적으로 메시지가 삽입되는 영역 -->
+              <div class="no-messages text-muted">
+                <i data-lucide="info" class="empty-icon"></i>
+                <p>아직 남겨진 메시지가 없습니다. 첫 번째 발자취를 남겨보세요!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="main-footer glass">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-accent">insug</span>j47 Hub
+        </div>
+        <div class="footer-sns">
+          <a href="https://www.youtube.com/@%EC%A0%95%EB%95%85%EC%BD%A9tv" target="_blank" rel="noopener noreferrer" class="sns-link" title="정땅콩tv"><i data-lucide="youtube"></i></a>
+          <a href="https://www.youtube.com/@%EB%95%85%EC%BD%A9%EB%A7%98%EC%83%B5_%EB%A7%81%ED%81%AC" target="_blank" rel="noopener noreferrer" class="sns-link" title="땅콩맘샵_링크"><i data-lucide="shopping-bag"></i></a>
+          <a href="https://www.youtube.com/@%EC%B0%90%EC%9E%AC%EB%AF%B8-q2d" target="_blank" rel="noopener noreferrer" class="sns-link" title="찐재미-q2d"><i data-lucide="gamepad-2"></i></a>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <p>&copy; 2026 insugj47. All rights reserved. Created with modern aesthetics.</p>
+        <p class="footer-tag">Made for fun & entertainment</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 인게임 모달 (Iframe 플레이어) -->
+  <div id="game-modal" class="modal-overlay hidden">
+    <div class="modal-container glass">
+      <div class="modal-header">
+        <h3 id="modal-game-title"><i data-lucide="gamepad-2"></i> Game Play</h3>
+        <div class="modal-actions">
+        <button id="modal-fullscreen" class="modal-action-btn" title="전체화면"><i data-lucide="maximize"></i></button>
+        <button id="modal-refresh" class="modal-action-btn" title="다시 로드"><i data-lucide="rotate-cw"></i></button>
+        <button id="modal-close" class="modal-action-btn close-btn" title="닫기"><i data-lucide="x"></i></button>
+      </div>
+      </div>
+      <div class="modal-body">
+        <div class="iframe-wrapper">
+          <!-- 로딩 스피너 -->
+          <div class="iframe-loader">
+            <div class="spinner"></div>
+            <p>게임 서버에 연결 중입니다...</p>
+          </div>
+          <iframe id="game-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 커스텀 스크립트 -->
+  <script src="app.js"></script>
+</body>
+</html>
