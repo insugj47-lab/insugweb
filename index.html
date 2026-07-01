@@ -48,6 +48,10 @@
         <a href="#guestbook" class="nav-link"><i data-lucide="message-square"></i> 방명록</a>
       </nav>
       <div class="header-controls">
+        <button id="music-toggle" class="control-btn glass" title="배경 음악 켜기" aria-label="배경 음악 켜기/끄기">
+          <i data-lucide="volume-2" class="music-on-icon"></i>
+          <i data-lucide="volume-x" class="music-off-icon"></i>
+        </button>
         <button id="theme-toggle" class="control-btn glass" title="테마 변경">
           <i data-lucide="sun" class="sun-icon"></i>
           <i data-lucide="moon" class="moon-icon"></i>
@@ -55,8 +59,29 @@
         <button id="particle-toggle" class="control-btn glass" title="배경 파티클 변경">
           <i data-lucide="sparkles"></i>
         </button>
+        <button id="mobile-menu-toggle" class="control-btn glass mobile-menu-toggle" title="메뉴 열기" aria-label="메뉴 열기" aria-expanded="false">
+          <i data-lucide="menu"></i>
+        </button>
       </div>
     </header>
+
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay hidden"></div>
+    <div id="mobile-menu-panel" class="mobile-menu-panel glass hidden" aria-hidden="true">
+      <div class="mobile-menu-header">
+        <div class="logo">
+          <span class="logo-accent">insug</span>j47
+        </div>
+        <button id="mobile-menu-close" class="control-btn glass" title="메뉴 닫기" aria-label="메뉴 닫기">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <nav class="mobile-nav-links">
+        <a href="#hero" class="mobile-nav-link"><i data-lucide="home"></i> 홈</a>
+        <a href="#youtube" class="mobile-nav-link"><i data-lucide="youtube"></i> 유튜브</a>
+        <a href="#games" class="mobile-nav-link"><i data-lucide="gamepad-2"></i> 게임</a>
+        <a href="#guestbook" class="mobile-nav-link"><i data-lucide="message-square"></i> 방명록</a>
+      </nav>
+    </div>
 
     <!-- 메인 컨텐츠 영역 -->
     <main>

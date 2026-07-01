@@ -68,6 +68,10 @@ body {
   line-height: 1.6;
 }
 
+body.mobile-menu-open {
+  overflow: hidden;
+}
+
 .scroll-progress-bar {
   position: fixed;
   top: 0;
@@ -287,6 +291,27 @@ body {
   transform: translateY(-2px);
 }
 
+.control-btn.active {
+  color: var(--accent-pink);
+  box-shadow: inset 0 0 0 1px rgba(248, 80, 120, 0.3);
+}
+
+.music-off-icon {
+  display: none;
+}
+
+.control-btn.active .music-on-icon {
+  display: none;
+}
+
+.control-btn.active .music-off-icon {
+  display: block;
+}
+
+.mobile-menu-toggle {
+  display: none;
+}
+
 .sun-icon {
   display: none;
 }
@@ -384,6 +409,7 @@ body {
 
 .gradient-text {
   background: var(--gradient-hero);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -1170,7 +1196,11 @@ body {
   }
   
   .nav-links {
-    display: none; /* 모바일 단순화를 위해 네비게이션 링크 생략하거나 슬림화 */
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
   }
   
   .logo {
@@ -1201,8 +1231,89 @@ body {
 }
 
 /* ==========================================
-   ENHANCED STYLES (CONFETTI, NEON CARD, FULLSCREEN MODAL)
+   MOBILE MENU & REVEAL ANIMATIONS
    ========================================== */
+
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 2, 10, 0.55);
+  backdrop-filter: blur(10px);
+  z-index: 140;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.mobile-menu-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-menu-panel {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 150;
+  border-radius: 24px;
+  padding: 20px;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.mobile-menu-panel.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu-panel.hidden {
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 700;
+  transition: var(--transition-smooth);
+}
+
+.mobile-nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* 1. Confetti Effects */
 .confetti-piece {

@@ -33,6 +33,185 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================
+     MOBILE MENU & AMBIENT MUSIC
+     ========================================== */
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  const musicToggleBtn = document.getElementById('music-toggle');
+
+  function openMobileMenu() {
+    if (mobileMenuPanel) {
+      mobileMenuPanel.classList.remove('hidden');
+      mobileMenuPanel.classList.add('is-open');
+      mobileMenuPanel.setAttribute('aria-hidden', 'false');
+    }
+    if (mobileMenuOverlay) {
+      mobileMenuOverlay.classList.remove('hidden');
+    }
+    if (mobileMenuToggle) {
+      mobileMenuToggle.setAttribute('aria-expanded', 'true');
+    }
+    document.body.classList.add('mobile-menu-open');
+  }
+
+  function closeMobileMenu() {
+    if (mobileMenuPanel) {
+      mobileMenuPanel.classList.remove('is-open');
+      mobileMenuPanel.classList.add('hidden');
+      mobileMenuPanel.setAttribute('aria-hidden', 'true');
+    }
+    if (mobileMenuOverlay) {
+      mobileMenuOverlay.classList.add('hidden');
+    }
+    if (mobileMenuToggle) {
+      mobileMenuToggle.setAttribute('aria-expanded', 'false');
+    }
+    document.body.classList.remove('mobile-menu-open');
+  }
+
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenuPanel?.classList.contains('is-open');
+      if (isOpen) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+  }
+
+  if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', closeMobileMenu);
+  }
+
+  if (mobileMenuOverlay) {
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+  }
+
+  mobileNavLinks.forEach((link) => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      closeMobileMenu();
+    }
+  });
+
+  let audioContext = null;
+  let masterGain = null;
+  let musicTimer = null;
+  let musicEnabled = false;
+  let musicNoteIndex = 0;
+  const musicNotes = [261.63, 329.63, 392, 329.63, 293.66, 261.63];
+
+  function updateMusicButtonUI() {
+    if (!musicToggleBtn) return;
+    if (musicEnabled) {
+      musicToggleBtn.classList.add('active');
+      musicToggleBtn.setAttribute('title', '배경 음악 끄기');
+      musicToggleBtn.setAttribute('aria-label', '배경 음악 끄기');
+    } else {
+      musicToggleBtn.classList.remove('active');
+      musicToggleBtn.setAttribute('title', '배경 음악 켜기');
+      musicToggleBtn.setAttribute('aria-label', '배경 음악 켜기');
+    }
+  }
+
+  function stopAmbientMusic() {
+    if (musicTimer) {
+      clearTimeout(musicTimer);
+      musicTimer = null;
+    }
+    musicEnabled = false;
+    updateMusicButtonUI();
+  }
+
+  function playAmbientNote(freq, duration = 1.4) {
+    if (!audioContext) {
+      audioContext = new AudioContext();
+      masterGain = audioContext.createGain();
+      masterGain.gain.value = 0.03;
+      masterGain.connect(audioContext.destination);
+    }
+
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+
+    const osc1 = audioContext.createOscillator();
+    const osc2 = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    osc1.type = 'sine';
+    osc2.type = 'triangle';
+    osc1.frequency.value = freq;
+    osc2.frequency.value = freq * 1.002;
+
+    gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.018, audioContext.currentTime + 0.2);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
+    gainNode.connect(masterGain);
+
+    osc1.start();
+    osc2.start();
+    osc1.stop(audioContext.currentTime + duration + 0.2);
+    osc2.stop(audioContext.currentTime + duration + 0.2);
+  }
+
+  function startAmbientMusic() {
+    if (musicEnabled) return;
+
+    musicEnabled = true;
+    updateMusicButtonUI();
+
+    const scheduleNextNote = () => {
+      if (!musicEnabled) return;
+      playAmbientNote(musicNotes[musicNoteIndex % musicNotes.length], 1.3);
+      musicNoteIndex = (musicNoteIndex + 1) % musicNotes.length;
+      musicTimer = setTimeout(scheduleNextNote, 1400);
+    };
+
+    scheduleNextNote();
+  }
+
+  if (musicToggleBtn) {
+    musicToggleBtn.addEventListener('click', () => {
+      if (musicEnabled) {
+        stopAmbientMusic();
+      } else {
+        startAmbientMusic();
+      }
+    });
+  }
+
+  /* ==========================================
+     REVEAL ANIMATIONS
+     ========================================== */
+  document.querySelectorAll('.section-container, .card, .hero-content').forEach((element) => {
+    element.classList.add('reveal-on-scroll');
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal-on-scroll').forEach((element) => {
+    revealObserver.observe(element);
+  });
+
+  /* ==========================================
      THEME TOGGLE (DARK / LIGHT)
      ========================================== */
   const themeToggleBtn = document.getElementById('theme-toggle');
