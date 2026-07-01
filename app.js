@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lucide 아이콘 초기화
   lucide.createIcons();
 
+  const pageLoader = document.getElementById('page-loader');
+  if (pageLoader) {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        pageLoader.classList.add('hidden');
+      }, 800);
+    });
+  }
+
   /* ==========================================
      SCROLL PROGRESS & BACK TO TOP
      ========================================== */
