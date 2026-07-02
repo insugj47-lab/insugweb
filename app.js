@@ -322,8 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
     height = canvas.height = window.innerHeight;
   });
 
-  // 파티클 종류 모드: 'cherry' (벚꽃) 또는 'fruit' (과일&땅콩)
-  let particleMode = localStorage.getItem('particleMode') || 'cherry';
+  // 파티클 종류 모드: 'fruit' (과일&땅콩) 또는 'cherry' (벚꽃)
+  let particleMode = localStorage.getItem('particleMode_v2') || 'fruit';
   const particles = [];
   const maxParticles = 55; // 파티클 밀도 약간 상승
 
@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   particleToggleBtn.addEventListener('click', () => {
     particleMode = particleMode === 'cherry' ? 'fruit' : 'cherry';
-    localStorage.setItem('particleMode', particleMode);
+    localStorage.setItem('particleMode_v2', particleMode);
     
     particles.forEach((p) => p.reset());
     
