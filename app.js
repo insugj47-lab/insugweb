@@ -1,8 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Lucide 아이콘 초기화
-  if (window.lucide && typeof lucide.createIcons === 'function') {
-    lucide.createIcons();
+  // Lucide 아이콘 안전 초기화 함수 정의
+  function safeCreateIcons() {
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+      try {
+        window.lucide.createIcons();
+      } catch (e) {
+        console.warn('Lucide icon generation failed:', e);
+      }
+    }
   }
+
+  // Lucide 아이콘 초기화
+  safeCreateIcons();
 
   const pageLoader = document.getElementById('page-loader');
   if (pageLoader) {
@@ -166,7 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function playAmbientNote(freq, duration = 1.4) {
     if (!audioContext) {
-      audioContext = new AudioContext();
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        audioContext = new AudioContextClass();
+      } else {
+        console.warn('AudioContext is not supported in this browser.');
+        return;
+      }
       masterGain = audioContext.createGain();
       masterGain.gain.value = 0.03;
       masterGain.connect(audioContext.destination);
@@ -254,13 +269,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // 로컬 스토리지에서 이전 테마 로드
   const savedTheme = localStorage.getItem('theme') || 'dark';
   if (savedTheme === 'light') {
+    body.classList.remove('dark-theme');
     body.classList.add('light-theme');
+  } else {
+    body.classList.remove('light-theme');
+    body.classList.add('dark-theme');
   }
 
   themeToggleBtn.addEventListener('click', () => {
-    body.classList.toggle('light-theme');
-    const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
-    localStorage.setItem('theme', currentTheme);
+    if (body.classList.contains('light-theme')) {
+      body.classList.remove('light-theme');
+      body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      body.classList.add('light-theme');
+      body.classList.remove('dark-theme');
+      localStorage.setItem('theme', 'light');
+    }
   });
 
   /* ==========================================
@@ -322,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.rotation = Math.random() * 360;
         this.rotationSpeed = Math.random() * 2 - 1;
         this.opacity = Math.random() * 0.4 + 0.4;
+        this.color = Math.random() > 0.5 ? cherryColor : cherryDarkColor;
       } else {
         // 과일 모드는 둥둥 떠다니는 느낌
         this.emoji = fruitEmojis[Math.floor(Math.random() * fruitEmojis.length)];
@@ -375,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.globalAlpha = this.opacity;
 
       if (particleMode === 'cherry') {
-        ctx.fillStyle = Math.random() > 0.5 ? cherryColor : cherryDarkColor;
+        ctx.fillStyle = this.color || cherryColor;
         ctx.beginPath();
         ctx.ellipse(0, 0, this.size, this.size / 1.6, 0, 0, Math.PI * 2);
         ctx.fill();
@@ -476,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       activeGameUrl = gameUrl;
       modalTitle.innerHTML = `<i data-lucide="gamepad-2"></i> ${gameTitle} (insugj47)`;
-      lucide.createIcons();
+      safeCreateIcons();
 
       modalLoader.classList.remove('hidden');
       modalIframe.src = gameUrl;
@@ -491,49 +517,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 모달 닫기
   function closeModal() {
-    modal.classList.add('hidden');
-    modal.classList.remove('fullscreen-modal'); // 전체화면 해제
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('fullscreen-modal'); // 전체화면 해제
+    }
     
     // 전체화면 아이콘 리셋
-    const icon = modalFullscreenBtn.querySelector('i');
-    icon.setAttribute('data-lucide', 'maximize');
-    modalFullscreenBtn.setAttribute('title', '전체화면');
-    lucide.createIcons();
-
-    modalIframe.src = '';
-    body.style.overflow = '';
-  }
-
-  modalCloseBtn.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
-
-  modalRefreshBtn.addEventListener('click', () => {
-    if (activeGameUrl) {
-      modalLoader.classList.remove('hidden');
-      modalIframe.src = activeGameUrl;
-    }
-  });
-
-  // 전체화면 토글
-  modalFullscreenBtn.addEventListener('click', () => {
-    modal.classList.toggle('fullscreen-modal');
-    const isFullscreen = modal.classList.contains('fullscreen-modal');
-    const icon = modalFullscreenBtn.querySelector('i');
-
-    if (isFullscreen) {
-      icon.setAttribute('data-lucide', 'minimize');
-      modalFullscreenBtn.setAttribute('title', '창 화면으로 복귀');
-    } else {
-      icon.setAttribute('data-lucide', 'maximize');
+    if (modalFullscreenBtn) {
+      const icon = modalFullscreenBtn.querySelector('i');
+      if (icon) {
+        icon.setAttribute('data-lucide', 'maximize');
+      }
       modalFullscreenBtn.setAttribute('title', '전체화면');
     }
-    lucide.createIcons();
-  });
+    
+    safeCreateIcons();
+
+    if (modalIframe) {
+      modalIframe.src = '';
+    }
+    if (body) {
+      body.style.overflow = '';
+    }
+  }
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', closeModal);
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
+
+  if (modalRefreshBtn) {
+    modalRefreshBtn.addEventListener('click', () => {
+      if (activeGameUrl) {
+        if (modalLoader) {
+          modalLoader.classList.remove('hidden');
+        }
+        if (modalIframe) {
+          modalIframe.src = activeGameUrl;
+        }
+      }
+    });
+  }
+
+  // 전체화면 토글
+  if (modalFullscreenBtn) {
+    modalFullscreenBtn.addEventListener('click', () => {
+      if (modal) {
+        modal.classList.toggle('fullscreen-modal');
+      }
+      const isFullscreen = modal ? modal.classList.contains('fullscreen-modal') : false;
+      const icon = modalFullscreenBtn.querySelector('i');
+
+      if (icon) {
+        if (isFullscreen) {
+          icon.setAttribute('data-lucide', 'minimize');
+          modalFullscreenBtn.setAttribute('title', '창 화면으로 복귀');
+        } else {
+          icon.setAttribute('data-lucide', 'maximize');
+          modalFullscreenBtn.setAttribute('title', '전체화면');
+        }
+      }
+      safeCreateIcons();
+    });
+  }
 
   /* ==========================================
      GUESTBOOK SYSTEM (LOCALSTORAGE) with CONFETTI
@@ -546,7 +599,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const messageCountSpan = document.getElementById('message-count');
   const clearGuestbookBtn = document.getElementById('clear-guestbook');
 
-  let guestbookData = JSON.parse(localStorage.getItem('insug_guestbook')) || [];
+  let guestbookData = [];
+  try {
+    const savedData = localStorage.getItem('insug_guestbook');
+    guestbookData = savedData ? JSON.parse(savedData) : [];
+    if (!Array.isArray(guestbookData)) {
+      guestbookData = [];
+    }
+  } catch (e) {
+    console.error('Failed to load guestbook messages:', e);
+    guestbookData = [];
+  }
 
   function saveGuestbook() {
     localStorage.setItem('insug_guestbook', JSON.stringify(guestbookData));
@@ -575,7 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>아직 남겨진 메시지가 없습니다. 첫 번째 발자취를 남겨보세요!</p>
         </div>
       `;
-      lucide.createIcons();
+      safeCreateIcons();
       return;
     }
 
@@ -603,6 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function escapeHTML(str) {
+    if (typeof str !== 'string') return '';
     return str.replace(/[&<>'"]/g, 
       (tag) => ({
         '&': '&amp;',
